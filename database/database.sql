@@ -7,7 +7,7 @@ create table faction (
 );
 
 create table personnage (
-    idPers int(11) primary key,
+    idPers int(11) primary auto_increment,
     nom varchar(150),
     idF int(11),
     sousFaction varchar(150),
@@ -20,7 +20,7 @@ create table personnage (
 );
 
 create table planete (
-    idP int(11),
+    idP int(11) primary key auto_increment,
     nom varchar(150),
     statut varchar(150),
     idF int(11),
