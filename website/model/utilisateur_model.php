@@ -75,5 +75,9 @@ class Utilisateur_model {
         }
         return TRUE;
     }
+
+    public function testAll() {
+        return;
+    }
 }
 ?>
