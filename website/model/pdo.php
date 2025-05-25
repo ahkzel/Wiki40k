@@ -14,7 +14,7 @@ class CoPDO {
             $this->con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         catch (PDOException $e) {
-            $e->getMessage();
+            die($e->getMessage());
         }
         return $this->con;
     }

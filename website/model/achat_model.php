@@ -1,6 +1,6 @@
 <?php
 // inclue le controller pdo dans le model
-include_once(__DIR__."controller/pdo_controller.php");
+include_once __DIR__."/../controller/pdo_controller.php";
 
 // on créé une classe dont on se servira pour appeler ses méthodes
 class Achat_model {
@@ -8,7 +8,7 @@ class Achat_model {
 
     public function __construct() {
         // dans le construct, prend la variable pdo du controlleur pdo pour créer la connexion
-        if (isset($_GET["con"])) $this->pdo = $_GET["con"];
+        if (isset($pdo_con)) $this->pdo = $pdo_con;
     }
 
     public function get_achat_from_name_email($name, $emailU) {
@@ -31,7 +31,7 @@ class Achat_model {
         // renvoie le message d'erreur par défaut si erreur il y a
         catch (PDOException $e) {
             print($e->getMessage());
-            return [];
+            die();
         }
         return $results;
     }
@@ -46,7 +46,7 @@ class Achat_model {
         }
         catch (PDOException $e) {
             print($e->getMessage());
-            return FALSE;
+            die();
         }
         return TRUE;
     }
@@ -68,7 +68,7 @@ class Achat_model {
         }
         catch (PDOException $e) {
             print($e->getMessage());
-            return [];
+            die();
         }
         return $results;
     }
@@ -82,7 +82,7 @@ class Achat_model {
         }
         catch (PDOException $e) {
             print($e->getMessage());
-            return FALSE;
+            die();
         }
         return TRUE;
     }
@@ -98,7 +98,7 @@ class Achat_model {
         }
         catch (PDOException $e) {
             print($e->getMessage());
-            return FALSE;
+            die();
         }
         return TRUE;
     }
@@ -124,7 +124,7 @@ class Achat_model {
         }
         catch (PDOException $e) {
             print($e->getMessage());
-            return FALSE;
+            die();
         }
         return TRUE;
     }

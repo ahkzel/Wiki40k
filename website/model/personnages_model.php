@@ -1,6 +1,6 @@
 <?php
 // inclue le controller pdo dans le model
-include_once(__DIR__."/controller/pdo_controller.php");
+include_once __DIR__."/../controller/pdo_controller.php";
 
 // on créé une classe dont on se servira pour appeler ses méthodes
 class Personnage_model {
@@ -8,7 +8,7 @@ class Personnage_model {
 
     public function __construct() {
         // dans le construct, prend la variable pdo du controlleur pdo pour créer la connexion
-        if (isset($_GET["con"])) $this->pdo = $_GET["con"];
+        if (isset($pdo_con)) $this->pdo = $pdo_con;
     }
 
     public function get_personnages() {
