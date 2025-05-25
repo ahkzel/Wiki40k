@@ -45,7 +45,7 @@ create table utilisateur (
     numeroRue int(11),
     nomRue varchar(150),
     idF int(11),
-    idP int(11),
+    idPers int(11),
     foreign key idF references faction(idF) on delete cascade,
 );
 
