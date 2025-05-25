@@ -29,7 +29,7 @@ class Faction_model {
         // renvoie le message d'erreur par défaut si erreur il y a
         catch (PDOException $e) {
             print($e->getMessage());
-            die();
+            return [];
         }
         return $result;
     }
@@ -51,7 +51,7 @@ class Faction_model {
         }
         catch (PDOException $e) {
             print($e->getMessage());
-            die();
+            return [];
         }
         return $result;
     }
@@ -67,7 +67,7 @@ class Faction_model {
         }
         catch (PDOException $e) {
             print($e->getMessage());
-            die();
+            return [];
         }
         return $result;
     }
