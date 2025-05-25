@@ -1,6 +1,6 @@
 <?php
 // inclue le controller pdo dans le model
-include_once(__DIR__."/controller/pdo_controller.php");
+include_once __DIR__."/../controller/pdo_controller.php";
 
 // on créé une classe dont on se servira pour appeler ses méthodes
 class Utilisateur_model {
@@ -8,7 +8,7 @@ class Utilisateur_model {
 
     public function __construct() {
         // dans le construct, prend la variable pdo du controlleur pdo pour créer la connexion
-        if (isset($_GET["con"])) $this->pdo = $_GET["con"];
+        if (isset($pdo_con)) $this->pdo = $pdo_con;
     }
 
     public function get_user_from_email($emailU) {
@@ -25,6 +25,55 @@ class Utilisateur_model {
             die();
         }
         return $result;
+    }
+
+    public function add_user($emailU, $mdpU, $pseudo, $ville, $codePostal, $numeroRue, $nomRue, $name_faction = NULL, $name_personnage = NULL) {
+        try {
+            if ($name_faction) {
+                try {
+                    $req = $this->pdo->prepare("select idF from faction where nom = :name_faction;");
+                    $req->bindValue(':name_faction', $name_faction, PDO::PARAM_STR);
+                    $req->execute();
+
+                    $idF_ = $req->fetch(PDO::FETCH_ASSOC);
+                }
+                catch (PDOException $e) {
+                    die($e->getMessage());
+                }
+            }
+            if ($name_personnage) {
+                try {
+                    $req = $this->pdo->prepare("select idPers from personnage where nom = :name_personnage;");
+                    $req->bindValue(':name_personnage', $name_personnage, PDO::PARAM_STR);
+                    $req->execute();
+
+                    $idPers_ = $req->fetch(PDO::FETCH_ASSOC);
+                }
+                catch (PDOException $e) {
+                    die($e->getMessage());
+                }
+            }
+            if ($idF_ and $idPers_) {
+                $idF = $idF_["idF"];
+                $idPers = $idPers_["idPers"];
+
+                $req = $this->pdo->prepare("insert into utilisateur (emailU, mdpU, pseudo, ville, codePostal, numeroRue, nomRue, idF, idPers) values (:emailU, :mdpU, :pseudo, :ville, :codePostal, :numeroRue, :nomRue, :idF, :idPers);");
+                $req->bindValue(':emailU', $emailU, PDO::PARAM_STR);
+                $req->bindValue(':mdpU', $mdpU, PDO::PARAM_STR);
+                $req->bindValue(':pseudo', $pseudo, PDO::PARAM_STR);
+                $req->bindValue(':ville', $ville, PDO::PARAM_STR);
+                $req->bindValue(':codePostal', $codePostal, PDO::PARAM_INT);
+                $req->bindValue(':numeroRue', $numeroRue, PDO::PARAM_INT);
+                $req->bindValue(':nomRue', $nomRue, PDO::PARAM_STR);
+                $req->bindValue(':idF', $idF, PDO::PARAM_INT);
+                $req->bindValue(':idPers', $idPers, PDO::PARAM_INT);
+                $req->execute();
+            }
+        }
+        catch (PDOException $e) {
+            die($e->getMessage());
+        }
+        return TRUE;
     }
 }
 ?>
