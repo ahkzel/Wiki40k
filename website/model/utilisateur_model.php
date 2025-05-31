@@ -76,8 +76,30 @@ class Utilisateur_model {
         return TRUE;
     }
 
+    public function change_faction($emailU, $name_faction) {
+        try {
+            $req = $this->pdo->prepare("update utilisateur join faction on faction.idF = utilisateur.idF set utilisateur.idF = :idF where faction.nom = :name_faction and utilisateur.emailU = :emailU;");
+            $req->bindValue(':name_faction', $name_faction, PDO::PARAM_STR);
+            $req->bindValue(':emailU', $emailU, PDO::PARAM_STR);
+            $req->execute();
+        }
+        catch (PDOException $e) {
+            die($e->getMessage());
+        }
+        return TRUE;
+    }
+
     public function testAll() {
-        return;
+        // fonction de test qui teste toutes les méthodes de la classe avec un exemple
+        if ($_SERVER["SCRIPT_FILENAME"] == __FILE__) {
+            header('Content-type:text/plain');
+        
+            echo("emailU with get_user_from_email() : \n");
+            print_r($this->get_user_from_email("emailU"));
+
+            echo "Add user emailU with add_user() : \n";
+            print_r($this->add_user("emailU", "mdpU", "melo", "montcuq", 40410, 13, "rue du caca", "Aeldari"));
+        }
     }
 }
 ?>

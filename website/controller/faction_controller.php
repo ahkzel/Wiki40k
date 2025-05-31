@@ -36,7 +36,7 @@ class Faction_controller {
     }
 }
 
-$controller = new Faction_controller();
+$faction_controller = new Faction_controller();
 
 $main_factions = array();
 $main_factions = $controller->get_factions_with_no_appartenance();
