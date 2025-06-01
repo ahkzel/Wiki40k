@@ -38,10 +38,13 @@ class Faction_controller {
 
 $faction_controller = new Faction_controller();
 
-$main_factions = array();
-$main_factions = $controller->get_factions_with_no_appartenance();
+$main_factions = $faction_controller->get_factions_with_no_appartenance();
+$all_factions = $faction_controller->get_all_factions();
 
-$all_factions = $controller->get_all_factions();
+if (isset($_GET["faction_name"])) {
+    $faction_name = htmlspecialchars($_GET["faction_name"]);
+    $active_faction = $faction_controller->this_faction($faction_name);
+}
 
 include ""; //vue;
 include ""; //vue;
