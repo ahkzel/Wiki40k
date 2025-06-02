@@ -8,6 +8,28 @@ class Faction_controller {
         $this->pdo = new Faction_model();
     }
 
+    public function show_all_factions() {
+        $all_factions = $this->get_all_factions();
+
+        include __DIR__."/../vue/factions.php"; //vue
+    }
+
+    public function show_first_factions() {
+        $TEMP_all_factions = $this->get_all_factions();
+        $TEMP_nb_factions = 8;
+        $first_factions = array_slice($TEMP_all_factions, 0, $TEMP_nb_factions, true);
+
+        include __DIR__."/../vue/factions.php"; //vue
+    }
+
+    public function show_faction_detail($datas) {
+        if (isset($datas["faction_name"])) {
+            $TEMP_faction_name = htmlspecialchars($datas["faction_name"]);
+            $active_faction = $this->this_faction($TEMP_faction_name);
+        }
+        include __DIR__."/../vue/faction_detail.php"; //vue
+    }
+
     public function get_all_factions() {
         $tab_factions = $this->pdo->get_factions();
         return $tab_factions;
@@ -15,6 +37,11 @@ class Faction_controller {
     
     public function this_faction($name) {
         $faction = $this->pdo->get_faction_from_name($name);
+        return $faction;
+    }
+
+    public function get_faction_from_id($idF) {
+        $faction = $this->pdo->get_faction_from_id($idF);
         return $faction;
     }
 
@@ -35,18 +62,4 @@ class Faction_controller {
         return $root_factions;
     }
 }
-
-$faction_controller = new Faction_controller();
-
-$main_factions = $faction_controller->get_factions_with_no_appartenance();
-$all_factions = $faction_controller->get_all_factions();
-
-if (isset($_GET["faction_name"])) {
-    $faction_name = htmlspecialchars($_GET["faction_name"]);
-    $active_faction = $faction_controller->this_faction($faction_name);
-}
-
-include ""; //vue;
-include ""; //vue;
-include ""; //vue;
 ?>

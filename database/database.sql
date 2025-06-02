@@ -4,6 +4,7 @@ create table faction (
     appartenance varchar(150),
     influence varchar(255),
     age varchar(150),
+    bio varchar(2000), -- nouveau
 );
 
 create table personnage (
@@ -16,6 +17,7 @@ create table personnage (
     genre varchar(150),
     statut varchar(150),
     classe varchar(150),
+    bio varchar(2000), -- nouveau
     foreign key idF references faction(idF) on delete cascade,
 );
 
@@ -24,6 +26,7 @@ create table planete (
     nom varchar(150),
     statut varchar(150),
     idF int(11),
+    bio varchar(2000), -- nouveau
     foreign key idF references faction(idF) on delete cascade,
 );
 

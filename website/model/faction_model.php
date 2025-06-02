@@ -1,6 +1,6 @@
 <?php
 // inclue le controller pdo dans le model
-include_once(__DIR__."/controller/pdo_controller.php");
+include_once __DIR__."/../controller/pdo_controller.php";
 
 // on créé une classe dont on se servira pour appeler ses méthodes
 class Faction_model {
@@ -72,6 +72,22 @@ class Faction_model {
         return $result;
     }
 
+    public function get_faction_from_id($idF) {
+        // Cette fonction renvoie une faction singulière d'après son id
+        try {
+            $req = $this->pdo->prepare("select * from faction where idF = :idF;");
+            $req->bindValue(':idF', $idF, PDO::PARAM_INT);
+            $req->execute();
+
+            $result = $req->fetch(PDO::FETCH_ASSOC);
+        }
+        catch (PDOException $e) {
+            print($e->getMessage());
+            die();
+        }
+        return $result;
+    }
+
     public function testAll() {
         // fonction de test qui teste toutes les méthodes de la classe avec un exemple
         if ($_SERVER["SCRIPT_FILENAME"] == __FILE__) {
@@ -85,6 +101,9 @@ class Faction_model {
 
             echo "Faction Aeldari with get_faction_from_name() : \n";
             print_r($this->get_faction_from_name("Aeldari"));
+
+            echo "Faction Aeldari with get_faction_from_id() : \n";
+            print_r($this->get_faction_from_id(4));
         }
     }
 }
