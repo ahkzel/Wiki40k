@@ -15,13 +15,13 @@ $factionC = new Faction_controller();
 $characterC = new Personnage_controller($factionC);
 $planeteC = new Planete_controller($factionC);
 $userC = new Utilisateur_controller();
-$setsC = new Minifigs_controller($factionC);
-$joueurC = new Joueur_controller($userC);
-$achatC = new Achat_controller($userC);
+$setsC = new Minifigs_controller();
+$joueurC = new Joueur_controller($factionC);
+$achatC = new Achat_controller();
 
 switch (TRUE) {
     case ($url === "") :
-        include "vue/accueil.php"; // vue
+        $factionC->show_first_factions();
         break;
     case ($url === "factions") :
         $factionC->show_all_factions();
@@ -42,13 +42,23 @@ switch (TRUE) {
         $planeteC->show_planete_detail($datas);
         break;
     case ($url === "create-account") :
-        include "vue/create_account.php"; // vue
+        $userC->show_create_account($forms);
         break;
     case ($url === "connexion") :
-        include "vue/connexion.php"; // vue
+        $userC->show_connexion($forms);
         break;
     case ($url === "shop") :
         $setsC->show_sets_above_0($datas);
+        break;
+    case ($url === "add-set") :
+        $setsC->add_to_basket($forms);
+        break;
+    case ($url === "buy-shop") :
+        $achatC->buy_everything($forms);
+        break;
+    case ($url === "add-joueur") :
+        $factionC->show_add_joueur();
+        $joueurC->show_add_joueur($forms);
         break;
     default :
         header("Location : /");

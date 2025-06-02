@@ -4,58 +4,65 @@ include_once __DIR__."/../model/joueur_model.php";
 
 class Joueur_controller {
     private $pdo;
-    private $user_controller;
+    private $faction_controller;
 
-    public function __construct($user_controller) {
+    public function __construct($faction_controller) {
         $this->pdo = new Joueur_model();
-        $this->user_controller = $user_controller;
+        $this->faction_controller = $faction_controller;
     }
 
-    public function get_players_by_emailU() {
-        if ($this->user_controller->is_connected() == FALSE) return NULL;
-        $emailU = $_SESSION["emailU"];
+    public function show_add_joueur($forms) {
+        if (!isset($_SESSION["emailU"])) {
+            $error_msg = "Vous devez être connecté et avoir un compte pour jouer une faction.";
+        }
+        else {
+            $TEMP_comptes_joueur = $this->get_players_by_emailU($_SESSION["emailU"]);
+            if ($TEMP_comptes_joueur) {
+                $faction_names = [];
+                foreach ($TEMP_comptes_joueur as $TEMP_joueur) {
+                    $faction_names[] = $this->get_faction_name($TEMP_joueur["idF"]);
+                }
+            }
 
+            if (isset($forms["faction_joueur"])) {
+                $TEMP_pts = $forms["points"] ?? 0;
+                $TEMP_pseudo = $_SESSION["pseudo"] ?? NULL;
+                $this->add_player($_SESSION["emailU"], $forms["faction_joueur"], $TEMP_pseudo, $TEMP_pts);
+            }
+        }
+
+        include __DIR__."/../vue/add-joueur"; //vue
+    }
+
+    public function get_players_by_emailU($emailU) {
         $players = $this->pdo->get_players_by_emailU($emailU);
         return $players;
     }
 
-    public function get_player_by_emailU_faction($name_faction) {
-        if ($this->user_controller->is_connected() == FALSE) return NULL;
-        $emailU = $_SESSION["emailU"];
-        
+    public function get_player_by_emailU_faction($emailU, $name_faction) {
         $player = $this->pdo->get_player_by_emailU_faction($emailU, $name_faction);
         return $player;
     }
 
-    public function add_player($name_faction, $pseudo, $pts) {
-        if ($this->user_controller->is_connected() == FALSE) return NULL;
-        $emailU = $_SESSION["emailU"];
-
+    public function add_player($emailU, $name_faction, $pseudo, $pts) {
         $player = $this->pdo->add_player($emailU, $name_faction, $pseudo, $pts);
         return $player;
     }
 
-    public function delete_player($name_faction) {
-        if ($this->user_controller->is_connected() == FALSE) return NULL;
-        $emailU = $_SESSION["emailU"];
-        
+    public function delete_player($emailU, $name_faction) {
         $player = $this->pdo->delete_player($emailU, $name_faction);
         return $player;
     }
 
-    public function update_player_in_points($name_faction, $pts) {
-        if ($this->user_controller->is_connected() == FALSE) return NULL;
-        $emailU = $_SESSION["emailU"];
-        
+    public function update_player_in_points($emailU, $name_faction, $pts) {
         $player = $this->pdo->update_player_in_points($emailU, $name_faction, $pts);
         return $player;
     }
+
+    public function get_faction_name($idF) {
+        $faction = $this->faction_controller->get_faction_from_id($idF);
+        $faction_name = $faction["nom"];
+        return $faction_name;
+    }
 }
-
-$user_controller = new Utilisateur_controller();
-$player_controller = new Joueur_controller($user_controller);
-
-include ""; //vue;
-include ""; //vue;
-include ""; //vue;
 ?>

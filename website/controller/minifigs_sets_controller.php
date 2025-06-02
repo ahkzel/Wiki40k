@@ -3,11 +3,9 @@ include_once __DIR__."/../model/minifigs_model.php";
 
 class Minifigs_controller {
     private $pdo;
-    private $faction_controller;
 
-    public function __construct($faction_controller) {
+    public function __construct() {
         $this->pdo = new Minifigs_model();
-        $this->faction_controller = $faction_controller;
     }
 
     public function show_sets_above_0($datas) {
@@ -17,6 +15,26 @@ class Minifigs_controller {
         }
         $available_sets = $this->get_sets_stock_above_0();
 
+        include __DIR__."/../vue/shop.php"; //vue
+    }
+
+    public function add_to_basket($forms) {
+        if (isset($forms["name_set"])) {
+            $TEMP_set_name = htmlspecialchars($forms["name_set"]);
+            $active_set = $this->get_set_from_name($TEMP_set_name);
+            
+            if (isset($_SESSION["emailU"])) {
+                if (!isset($_SESSION["basket"])) {
+                    $_SESSION["basket"] = [];
+                }
+                if (!in_array($active_set, $_SESSION["basket"])) {
+                    $_SESSION["basket"][$TEMP_set_name] = $active_set;
+                }
+            }
+            else {
+                $error_msg = "Vous devez être connecté pour acheter des sets dans la boutique.";
+            }
+        }
         include __DIR__."/../vue/shop.php"; //vue
     }
 

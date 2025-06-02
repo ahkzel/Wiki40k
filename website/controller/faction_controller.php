@@ -30,6 +30,16 @@ class Faction_controller {
         include __DIR__."/../vue/faction_detail.php"; //vue
     }
 
+    public function show_add_joueur() {
+        $TEMP_all_factions = $this->get_all_factions();
+        $faction_names = [];
+        foreach ($TEMP_all_factions as $TEMP_faction) {
+            $faction_names[] = $TEMP_faction["nom"];
+        }
+
+        include __DIR__."/../vue/add-joueur"; //vue
+    }
+
     public function get_all_factions() {
         $tab_factions = $this->pdo->get_factions();
         return $tab_factions;
