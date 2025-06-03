@@ -10,8 +10,12 @@ class CoPDO {
         $this->con = NULL;
 
         try {
-            $this->con = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
-            $this->con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->con = new PDO(
+                "mysql:host=" . $this->host . ";dbname=" . $this->db_name, 
+                $this->username, 
+                $this->password, 
+                [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+            );
         }
         catch (PDOException $e) {
             die($e->getMessage());

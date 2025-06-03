@@ -1,13 +1,16 @@
 <?php
+include_once __DIR__."/pdo_controller.php";
 include_once __DIR__."/utilisateur_controller.php";
 include_once __DIR__."/../model/joueur_model.php";
 
 class Joueur_controller {
     private $pdo;
+    private $model;
     private $faction_controller;
 
-    public function __construct($faction_controller) {
-        $this->pdo = new Joueur_model();
+    public function __construct($pdo_controller, $faction_controller) {
+        $this->pdo = $pdo_controller->getPdo();
+        $this->model = new Joueur_model($this->pdo);
         $this->faction_controller = $faction_controller;
     }
 
@@ -31,31 +34,31 @@ class Joueur_controller {
             }
         }
 
-        include __DIR__."/../vue/add-joueur"; //vue
+        include __DIR__."/../vue/add_joueur"; //vue
     }
 
     public function get_players_by_emailU($emailU) {
-        $players = $this->pdo->get_players_by_emailU($emailU);
+        $players = $this->model->get_players_by_emailU($emailU);
         return $players;
     }
 
     public function get_player_by_emailU_faction($emailU, $name_faction) {
-        $player = $this->pdo->get_player_by_emailU_faction($emailU, $name_faction);
+        $player = $this->model->get_player_by_emailU_faction($emailU, $name_faction);
         return $player;
     }
 
     public function add_player($emailU, $name_faction, $pseudo, $pts) {
-        $player = $this->pdo->add_player($emailU, $name_faction, $pseudo, $pts);
+        $player = $this->model->add_player($emailU, $name_faction, $pseudo, $pts);
         return $player;
     }
 
     public function delete_player($emailU, $name_faction) {
-        $player = $this->pdo->delete_player($emailU, $name_faction);
+        $player = $this->model->delete_player($emailU, $name_faction);
         return $player;
     }
 
     public function update_player_in_points($emailU, $name_faction, $pts) {
-        $player = $this->pdo->update_player_in_points($emailU, $name_faction, $pts);
+        $player = $this->model->update_player_in_points($emailU, $name_faction, $pts);
         return $player;
     }
 

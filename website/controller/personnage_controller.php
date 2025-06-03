@@ -1,12 +1,15 @@
 <?php
-include_once __DIR__."/../model/personnage_model.php";
+include_once __DIR__."/pdo_controller.php";
+include_once __DIR__."/../model/personnages_model.php";
 
 class Personnage_controller {
     private $pdo;
+    private $model;
     private $faction_controller;
 
-    public function __construct($faction_controller) {
-        $this->pdo = new Personnage_model();
+    public function __construct($pdo_controller, $faction_controller) {
+        $this->pdo = $pdo_controller->getPdo();
+        $this->model = new Personnage_model($this->pdo);
         $this->faction_controller = $faction_controller;
     }
 
@@ -36,27 +39,27 @@ class Personnage_controller {
     }
 
     public function get_all_personnages() {
-        $all_characters = $this->pdo->get_personnages();
+        $all_characters = $this->model->get_personnages();
         return $all_characters;
     }
 
     public function this_personnage($name) {
-        $character = $this->pdo->get_personnage_from_name($name);
+        $character = $this->model->get_personnage_from_name($name);
         return $character;
     }
 
     public function get_personnages_from_faction($name_faction) {
-        $characters = $this->pdo->get_personnage_from_faction($name_faction);
+        $characters = $this->model->get_personnage_from_faction($name_faction);
         return $characters;
     }
 
     public function get_personnages_from_sous_faction($name_s_faction) {
-        $characters = $this->pdo->get_personnage_from_sous_faction($name_s_faction);
+        $characters = $this->model->get_personnage_from_sous_faction($name_s_faction);
         return $characters;
     }
 
     public function get_personnages_from_classe($classe) {
-        $characters = $this->pdo->get_personnage_from_classe($classe);
+        $characters = $this->model->get_personnage_from_classe($classe);
         return $characters;
     }
 

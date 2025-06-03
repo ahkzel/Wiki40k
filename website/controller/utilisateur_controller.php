@@ -1,11 +1,14 @@
 <?php
+include_once __DIR__."/pdo_controller.php";
 include_once __DIR__."/../model/utilisateur_model.php";
 
 class Utilisateur_controller {
     private $pdo;
+    private $model;
 
-    public function __construct() {
-        $this->pdo = new Utilisateur_model();
+    public function __construct($pdo_controller) {
+        $this->pdo = $pdo_controller->getPdo();
+        $this->model = new Utilisateur_model($this->pdo);
     }
 
     public function show_connexion($forms) {
@@ -78,12 +81,12 @@ class Utilisateur_controller {
     }
 
     public function create_account($emailU, $mdpU, $pseudo, $ville, $codePostal, $numeroRue, $nomRue, $nameFaction, $namePersonnage) {
-        $new_account = $this->pdo->add_user($emailU, $mdpU, $pseudo, $ville, $codePostal, $numeroRue, $nomRue, $nameFaction, $namePersonnage);
+        $new_account = $this->model->add_user($emailU, $mdpU, $pseudo, $ville, $codePostal, $numeroRue, $nomRue, $nameFaction, $namePersonnage);
         return $new_account;
     }
 
     public function get_user_from_email($emailU) {
-        $user = $this->pdo->get_user_from_email($emailU);
+        $user = $this->model->get_user_from_email($emailU);
         return $user;
     }
 
@@ -93,7 +96,7 @@ class Utilisateur_controller {
         }
 
         $nameFaction = $_POST["name_faction"] ?? NULL;
-        $user_update = $this->pdo->change_faction($emailU, $nameFaction);
+        $user_update = $this->model->change_faction($emailU, $nameFaction);
         return $user_update;
     }
 }

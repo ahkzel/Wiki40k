@@ -1,14 +1,11 @@
 <?php
-// inclue le controller pdo dans le model
-include_once __DIR__."/../controller/pdo_controller.php";
-
 // on créé une classe dont on se servira pour appeler ses méthodes
 class Planete_model {
     private $pdo;
 
-    public function __construct() {
+    public function __construct($pdo) {
         // dans le construct, prend la variable pdo du controlleur pdo pour créer la connexion
-        if (isset($pdo_con)) $this->pdo = $pdo_con;
+        if (isset($pdo)) $this->pdo = $pdo;
     }
 
     public function get_planetes() {

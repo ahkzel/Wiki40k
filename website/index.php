@@ -1,4 +1,5 @@
 <?php
+include_once "controller/pdo_controller.php";
 include_once "controller/faction_controller.php";
 include_once "controller/achat_controller.php";
 include_once "controller/joueur_controller.php";
@@ -11,13 +12,14 @@ $url = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
 $datas = $_GET ?? NULL;
 $forms = $_POST ?? NULL;
 
-$factionC = new Faction_controller();
-$characterC = new Personnage_controller($factionC);
-$planeteC = new Planete_controller($factionC);
-$userC = new Utilisateur_controller();
-$setsC = new Minifigs_controller();
-$joueurC = new Joueur_controller($factionC);
-$achatC = new Achat_controller();
+$PDOC = new Pdo_controller();
+$factionC = new Faction_controller($PDOC);
+$characterC = new Personnage_controller($PDOC, $factionC);
+$planeteC = new Planete_controller($PDOC, $factionC);
+$userC = new Utilisateur_controller($PDOC);
+$setsC = new Minifigs_controller($PDOC);
+$joueurC = new Joueur_controller($PDOC, $factionC);
+$achatC = new Achat_controller($PDOC);
 
 switch (TRUE) {
     case ($url === "") :
@@ -32,10 +34,10 @@ switch (TRUE) {
     case ($url === "planetes") :
         $planeteC->show_planetes($datas);
         break;
-    case ($url === "faction_detail") :
+    case ($url === "faction-detail") :
         $factionC->show_faction_detail($datas);
         break;
-    case ($url === "personnage_detail") :
+    case ($url === "personnage-detail") :
         $characterC->show_personnage_detail($datas);
         break;
     case ($url === "planete-detail") :

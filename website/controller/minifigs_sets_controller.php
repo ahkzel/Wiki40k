@@ -1,11 +1,14 @@
 <?php
+include_once __DIR__."/pdo_controller.php";
 include_once __DIR__."/../model/minifigs_model.php";
 
 class Minifigs_controller {
     private $pdo;
+    private $model;
 
-    public function __construct() {
-        $this->pdo = new Minifigs_model();
+    public function __construct($pdo_controller) {
+        $this->pdo = $pdo_controller->getPdo();
+        $this->model = new Minifigs_model($this->pdo);
     }
 
     public function show_sets_above_0($datas) {
@@ -39,22 +42,22 @@ class Minifigs_controller {
     }
 
     public function get_all_sets() {
-        $all_sets = $this->pdo->get_sets();
+        $all_sets = $this->model->get_sets();
         return $all_sets;
     }
 
     public function get_sets_stock_above_0() {
-        $sets_stock = $this->pdo->get_sets_stock_above_0();
+        $sets_stock = $this->model->get_sets_stock_above_0();
         return $sets_stock;
     }
 
     public function get_sets_from_faction($faction_name) {
-        $sets = $this->pdo->get_sets_from_faction($faction_name);
+        $sets = $this->model->get_sets_from_faction($faction_name);
         return $sets;
     }
 
     public function get_set_from_name($name_set) {
-        $set = $this->pdo->get_sets_from_name($name_set);
+        $set = $this->model->get_sets_from_name($name_set);
         return $set;
     }
 }

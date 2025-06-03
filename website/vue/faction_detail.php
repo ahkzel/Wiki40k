@@ -35,23 +35,6 @@
             </ul>
         </nav>
 
-        <main>
-            <div class="main-content-accueil">
-                <?php foreach ($first_factions as $faction): ?>
-                    <a href="index.php?url=faction-detail&faction-name= <?= $faction["nom"]; ?>" class="link-faction-detail">
-                        <div class="faction-box">
-                            <h2><?= htmlspecialchars($faction["nom"]); ?></h2>
-                            <ul>
-                                <li><b>Appartenance : </b><?= htmlspecialchars($faction["appartenance"]); ?></li>
-                                <li><b>Influence : </b><?= htmlspecialchars($faction["influence"]); ?></li>
-                                <li><b>age : </b><?= htmlspecialchars($faction["age"]); ?></li>
-                                <li><b>bio : </b><?= htmlspecialchars($faction["bio"]); ?></li>
-                            </ul>
-                        </div>
-                    </a>
-                <?php endforeach; ?>
-            </div>
-        </main>
 
         <footer>
             <p>&copy; 2025 - Wiki40k, Axel Beaulieu-Luangkham. Tous droits réservés.</p>

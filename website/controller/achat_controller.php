@@ -1,12 +1,15 @@
 <?php
-include_once __DIR__."controller/utilisateur_controller.php";
+include_once __DIR__."/pdo_controller.php";
+include_once __DIR__."/utilisateur_controller.php";
 include_once __DIR__."/../model/achat_model.php";
 
 class Achat_controller {
     private $pdo;
+    private $model;
 
-    public function __construct() {
-        $this->pdo = new Achat_model();
+    public function __construct($pdo_controller) {
+        $this->pdo = $pdo_controller->getPdo();
+        $this->model = new Achat_model($this->pdo);
     }
 
     public function buy_everything($forms) {
@@ -26,32 +29,32 @@ class Achat_controller {
     }
 
     public function add_achat_from_name_emailU($name_set, $emailU) {
-        $achat = $this->pdo->add_achat_from_name_email($name_set, $emailU);
+        $achat = $this->model->add_achat_from_name_email($name_set, $emailU);
         return $achat;
     }
 
     public function get_all_achat_from_emailU($emailU) {
-        $achats = $this->pdo->get_all_achat_from_email($emailU);
+        $achats = $this->model->get_all_achat_from_email($emailU);
         return $achats;
     }
 
     public function get_achat_from_name_emailU($name_set, $emailU) {
-        $achats = $this->pdo->get_achat_from_name_email($name_set, $emailU);
+        $achats = $this->model->get_achat_from_name_email($name_set, $emailU);
         return $achats;
     }
 
     public function delete_all_achat_from_emailU($emailU) {
-        $deletes = $this->pdo->delete_all_achat_from_email($emailU);
+        $deletes = $this->model->delete_all_achat_from_email($emailU);
         return $deletes;
     }
 
     public function delete_achat_from_name_emailU($name_set, $emailU) {
-        $deletes = $this->pdo->delete_achat_from_name_email($name_set, $emailU);
+        $deletes = $this->model->delete_achat_from_name_email($name_set, $emailU);
         return $deletes;
     }
 
     public function delete_nb_achat_from_name_emailU($limit, $name_set, $emailU) {
-        $deletes = $this->pdo->delete_nb_achat_from_name_email($limit, $name_set, $emailU);
+        $deletes = $this->model->delete_nb_achat_from_name_email($limit, $name_set, $emailU);
         return $deletes;
     }
 }

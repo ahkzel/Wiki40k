@@ -1,12 +1,15 @@
 <?php
+include_once __DIR__."/pdo_controller.php";
 include_once __DIR__."/../model/planete_model.php";
 
 class Planete_controller {
     private $pdo;
+    private $model;
     private $faction_controller;
 
-    public function __construct($faction_controller) {
-        $this->pdo = new Planete_model();
+    public function __construct($pdo_controller, $faction_controller) {
+        $this->pdo = $pdo_controller->getPdo();
+        $this->model = new Planete_model($this->pdo);
         $this->faction_controller = $faction_controller;
     }
 
@@ -36,17 +39,17 @@ class Planete_controller {
     }
 
     public function get_all_planetes() {
-        $all_planetes = $this->pdo->get_planetes();
+        $all_planetes = $this->model->get_planetes();
         return $all_planetes;
     }
 
     public function this_planete($name) {
-        $planete = $this->pdo->get_planete_from_name($name);
+        $planete = $this->model->get_planete_from_name($name);
         return $planete;
     }
 
     public function get_planetes_from_faction($name_faction) {
-        $planetes = $this->pdo->get_planete_from_faction($name_faction);
+        $planetes = $this->model->get_planete_from_faction($name_faction);
         return $planetes;
     }
 
