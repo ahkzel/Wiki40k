@@ -11,34 +11,32 @@ class Minifigs_controller {
         $this->model = new Minifigs_model($this->pdo);
     }
 
-    public function show_sets_above_0($datas) {
-        if (isset($datas["parent_faction"])) {
-            $TEMP_faction_name = htmlspecialchars($datas["parent_faction"]);
-            $available_sets = $this->get_sets_from_faction($TEMP_faction_name);
-        }
+    public function show_sets_above_0() {
         $available_sets = $this->get_sets_stock_above_0();
 
-        include __DIR__."/../vue/shop.php"; //vue
+        foreach ($available_sets as &$TEMP_set) {
+            foreach ($TEMP_set as &$TEMP_attribute) {
+                $TEMP_attribute = $this->handle_NULL($TEMP_attribute);
+            }
+        }
+
+        return $available_sets;
     }
 
     public function add_to_basket($forms) {
+        $available_sets = $this->show_sets_above_0();
         if (isset($forms["name_set"])) {
-            $TEMP_set_name = htmlspecialchars($forms["name_set"]);
+            $TEMP_set_name = $forms["name_set"];
             $active_set = $this->get_set_from_name($TEMP_set_name);
             
             if (isset($_SESSION["emailU"])) {
-                if (!isset($_SESSION["basket"])) {
-                    $_SESSION["basket"] = [];
-                }
-                if (!in_array($active_set, $_SESSION["basket"])) {
-                    $_SESSION["basket"][$TEMP_set_name] = $active_set;
-                }
+                return $active_set;
             }
             else {
                 $error_msg = "Vous devez être connecté pour acheter des sets dans la boutique.";
+                return [];
             }
         }
-        include __DIR__."/../vue/shop.php"; //vue
     }
 
     public function get_all_sets() {
@@ -59,6 +57,13 @@ class Minifigs_controller {
     public function get_set_from_name($name_set) {
         $set = $this->model->get_sets_from_name($name_set);
         return $set;
+    }
+
+    public function handle_NULL($item) {
+        if ($item == NULL) {
+            return "N/A";
+        }
+        return $item;
     }
 }
 ?>

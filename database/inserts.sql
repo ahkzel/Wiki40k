@@ -17,4 +17,7 @@ insert into planete (nom, statut, idF, bio) values
 ("Terra", "Active", 1, "C'est Terra, le monde d'origine de L'Imperium de l'Humanité quoi. Y a tout dessus.")
 
 insert into minifigs_sets (nom, prix, stock, idF) values
-("escouade d'intercesseurs", 51.25, 0, 1)
+("escouade d'intercesseurs", 51.25, 1, 1),
+("Lances Etincelantes", 55.00, 10, 4),
+("Le Visarque", 26.00, 0, 4),
+("Corps de Titan Phantom", 625.00, 1, 4);

@@ -13,19 +13,20 @@ class Achat_controller {
     }
 
     public function buy_everything($forms) {
-        $nb_achat = 0;
-        foreach ($_SESSION["basket"] as $item) {
-            for ($i=0; $i < $forms["number_item_".$item["nom"]]; $i++) {
-                if (!isset($_SESSION["emailU"])) {
-                    $error_msg = "Vous devez être connecté pour pouvoir faire cette action";
-                }
-                else {
-                    $this->add_achat_from_name_emailU($item["nom"], $_SESSION["emailU"]);
-                    $nb_achat++;
+        if (!isset($_SESSION["emailU"])) {
+            $error_msg = "Vous devez être connecté pour pouvoir faire cette action";
+            return FALSE;
+        }
+        if (isset($forms["sets"])) {
+            foreach ($forms["sets"] as $set_id => $set_data) {
+                $TEMP_name_set = $set_data["nom"];
+                $TEMP_number_set = intval($set_data["quantite"]);
+                for ($i=0; $i < $TEMP_number_set; $i++) {
+                    $this->add_achat_from_name_emailU($TEMP_name_set, $_SESSION["emailU"]);
                 }
             }
         }
-        include __DIR__."/../vue/shop.php"; //vue
+        return TRUE;
     }
 
     public function add_achat_from_name_emailU($name_set, $emailU) {

@@ -14,27 +14,28 @@ class Joueur_controller {
         $this->faction_controller = $faction_controller;
     }
 
-    public function show_add_joueur($forms) {
-        if (!isset($_SESSION["emailU"])) {
-            $error_msg = "Vous devez être connecté et avoir un compte pour jouer une faction.";
-        }
-        else {
-            $TEMP_comptes_joueur = $this->get_players_by_emailU($_SESSION["emailU"]);
-            if ($TEMP_comptes_joueur) {
-                $faction_names = [];
-                foreach ($TEMP_comptes_joueur as $TEMP_joueur) {
-                    $faction_names[] = $this->get_faction_name($TEMP_joueur["idF"]);
-                }
-            }
-
-            if (isset($forms["faction_joueur"])) {
-                $TEMP_pts = $forms["points"] ?? 0;
-                $TEMP_pseudo = $_SESSION["pseudo"] ?? NULL;
-                $this->add_player($_SESSION["emailU"], $forms["faction_joueur"], $TEMP_pseudo, $TEMP_pts);
-            }
+    public function submit_add_joueur($forms) {
+        if (isset($forms["faction_joueur"])) {
+            if ($forms["points"] == "" || !ctype_digit($forms["points"])) $TEMP_pts =  0;
+            $TEMP_pts = $forms["points"] ?? 0;
+            $TEMP_pseudo = $_SESSION["pseudo"] ?? NULL;
+            $this->add_player($_SESSION["emailU"], $forms["faction_joueur"], $TEMP_pseudo, $TEMP_pts);
         }
 
-        include __DIR__."/../vue/add_joueur"; //vue
+        header("Location: index.php");
+        exit();
+    }
+
+    public function show_add_joueur() {
+        $factions_played = [];
+        $TEMP_comptes_joueur = $this->get_players_by_emailU($_SESSION["emailU"]);
+        if ($TEMP_comptes_joueur) {
+            foreach ($TEMP_comptes_joueur as $TEMP_joueur) {
+                $factions_played[] = $this->get_faction_name($TEMP_joueur["idF"]);
+            }
+        }
+
+        return $factions_played;
     }
 
     public function get_players_by_emailU($emailU) {

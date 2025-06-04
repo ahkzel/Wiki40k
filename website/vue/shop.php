@@ -20,6 +20,7 @@
                 <div class="user-links">
                     <?php if (isset($_SESSION["emailU"])) : ?>
                         <a href="index.php?url=add-joueur">Ajouter un joueur</a>
+                        <a href="index.php?url=deconnexion">Se déconnecter</a>
                     <?php else : ?>
                         <a href="index.php?url=create-account">Créer un compte</a>
                         <a href="index.php?url=connexion">Se connecter</a>
@@ -37,10 +38,62 @@
             </ul>
         </nav>
 
+        <main>
+            <div class="main-content-shop">
+                <div class="shop-items">
+                    <?php foreach ($available_sets as $set): ?>
+                        <div class="shop-box">
+                            <h3><?= htmlspecialchars($set["nom"]) ?></h3>
+                            <p>Prix : <?= htmlspecialchars($set["prix"]) ?> €</p>
+                            <p>Stock disponible : <?= htmlspecialchars($set["stock"]) ?></p>
+                            <img src="<?= "/../assets/".$set["image"] ?>">
+                            <form method="POST" action="index.php?url=add-set" method="POST">
+                                <input type="hidden" name="name_set" value="<?= htmlspecialchars($set["nom"]) ?>">
+                                <button type="submit" class="button-add-cart">Ajouter au panier</button>
+                            </form>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <div class="cart-icon" onclick="toggleCart()">🛒 Panier</div>
+
+                <div class="cart-content" id="cart" style="display: none;">
+                    <h2>Mon Panier</h2>
+
+                    <ul class="cart-items" id="cart-items">
+                        <?php if (!empty($sets_to_cart)) : ?>
+                            <?php foreach ($sets_to_cart as $set) : ?>
+                                <li class="cart-item">
+                                    <span class="set-name"><?= htmlspecialchars($set["nom"]) ?></span>
+                                    
+                                    <button class="button-quantity" onclick="updateQuantity('minus', <?= htmlspecialchars($set['idM']) ?>)">-</button>
+                                    <span class="number-item" id="number-item-<?= htmlspecialchars($set["idM"]) ?>">1</span>
+                                    <button class="button-quantity" onclick="updateQuantity('plus', <?= htmlspecialchars($set['idM']) ?>, <?= htmlspecialchars($set['stock']) ?>)">+</button>
+                                </li>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <li>Aucun set dans le panier.</li>
+                        <?php endif; ?>
+                    </ul>
+
+                    <form method="POST" action="index.php?url=buy-shop">
+                        <?php if (!empty($sets_to_cart)) : ?>
+                            <?php foreach ($sets_to_cart as $set) : ?>
+                                <input type="hidden" name="sets[<?= $set["idM"] ?>][nom]" value="<?= $set["nom"] ?>">
+                                <input type="hidden" name="sets[<?= $set["idM"] ?>][quantite]" id="input-quantity-<?= $set["idM"] ?>" value="1">
+                            <?php endforeach; ?>
+                            <button type="submit" class="button-buy-all">Tout acheter</button>
+                        <?php endif; ?>
+                    </form>
+                </div>
+
+            </div>
+        </main>
 
         <footer>
             <p>&copy; 2025 - Wiki40k, Axel Beaulieu-Luangkham. Tous droits réservés.</p>
         </footer>
 
+        <script src="../assets/javascript/main.js"></script>
     </body>
 </html>

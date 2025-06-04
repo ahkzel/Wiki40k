@@ -56,7 +56,7 @@ class Faction_controller {
             $faction_names[] = $TEMP_faction["nom"];
         }
 
-        include __DIR__."/../vue/add_joueur"; //vue
+        return $faction_names;
     }
 
     public function get_all_factions() {

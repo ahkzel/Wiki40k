@@ -26,46 +26,38 @@ class Utilisateur_model {
 
     public function add_user($emailU, $mdpU, $pseudo, $ville, $codePostal, $numeroRue, $nomRue, $name_faction = NULL, $name_personnage = NULL) {
         try {
-            if ($name_faction) {
-                try {
-                    $req = $this->pdo->prepare("select idF from faction where nom = :name_faction;");
-                    $req->bindValue(':name_faction', $name_faction, PDO::PARAM_STR);
-                    $req->execute();
+            $idF = NULL;
+            $idPers = NULL;
 
-                    $idF_ = $req->fetch(PDO::FETCH_ASSOC);
-                }
-                catch (PDOException $e) {
-                    die($e->getMessage());
-                }
+            if ($name_faction) {
+                $req = $this->pdo->prepare("select idF from faction where nom = :name_faction;");
+                $req->bindValue(':name_faction', $name_faction, PDO::PARAM_STR);
+                $req->execute();
+
+                $idF_ = $req->fetch(PDO::FETCH_ASSOC) ?? NULL;
             }
             if ($name_personnage) {
-                try {
-                    $req = $this->pdo->prepare("select idPers from personnage where nom = :name_personnage;");
-                    $req->bindValue(':name_personnage', $name_personnage, PDO::PARAM_STR);
-                    $req->execute();
-
-                    $idPers_ = $req->fetch(PDO::FETCH_ASSOC);
-                }
-                catch (PDOException $e) {
-                    die($e->getMessage());
-                }
-            }
-            if ($idF_ and $idPers_) {
-                $idF = $idF_["idF"];
-                $idPers = $idPers_["idPers"];
-
-                $req = $this->pdo->prepare("insert into utilisateur (emailU, mdpU, pseudo, ville, codePostal, numeroRue, nomRue, idF, idPers) values (:emailU, :mdpU, :pseudo, :ville, :codePostal, :numeroRue, :nomRue, :idF, :idPers);");
-                $req->bindValue(':emailU', $emailU, PDO::PARAM_STR);
-                $req->bindValue(':mdpU', $mdpU, PDO::PARAM_STR);
-                $req->bindValue(':pseudo', $pseudo, PDO::PARAM_STR);
-                $req->bindValue(':ville', $ville, PDO::PARAM_STR);
-                $req->bindValue(':codePostal', $codePostal, PDO::PARAM_INT);
-                $req->bindValue(':numeroRue', $numeroRue, PDO::PARAM_INT);
-                $req->bindValue(':nomRue', $nomRue, PDO::PARAM_STR);
-                $req->bindValue(':idF', $idF, PDO::PARAM_INT);
-                $req->bindValue(':idPers', $idPers, PDO::PARAM_INT);
+                $req = $this->pdo->prepare("select idPers from personnage where nom = :name_personnage;");
+                $req->bindValue(':name_personnage', $name_personnage, PDO::PARAM_STR);
                 $req->execute();
+
+                $idPers_ = $req->fetch(PDO::FETCH_ASSOC) ?? NULL;
             }
+
+            $idF = $idF_["idF"] ?? NULL;
+            $idPers = $idPers_["idPers"] ?? NULL;
+
+            $req = $this->pdo->prepare("insert into utilisateur (emailU, mdpU, pseudo, ville, codePostal, numeroRue, nomRue, idF, idPers) values (:emailU, :mdpU, :pseudo, :ville, :codePostal, :numeroRue, :nomRue, :idF, :idPers);");
+            $req->bindValue(':emailU', $emailU, PDO::PARAM_STR);
+            $req->bindValue(':mdpU', $mdpU, PDO::PARAM_STR);
+            $req->bindValue(':pseudo', $pseudo, PDO::PARAM_STR);
+            $req->bindValue(':ville', $ville, PDO::PARAM_STR);
+            $req->bindValue(':codePostal', $codePostal, PDO::PARAM_INT);
+            $req->bindValue(':numeroRue', $numeroRue, PDO::PARAM_INT);
+            $req->bindValue(':nomRue', $nomRue, PDO::PARAM_STR);
+            $req->bindValue(':idF', $idF, PDO::PARAM_INT);
+            $req->bindValue(':idPers', $idPers, PDO::PARAM_INT);
+            $req->execute();
         }
         catch (PDOException $e) {
             die($e->getMessage());

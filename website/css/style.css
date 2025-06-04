@@ -248,6 +248,199 @@ header h1 {
     text-decoration: underline;
 }
 
+/* page création de compte */
+.form-account {
+    width: 700px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #2c3e50;
+    color: white;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-account h2 {
+    text-align: center;
+}
+
+.form-account label {
+    font-weight: bold;
+}
+
+.form-account input {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+.form-account ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.form-account li {
+    width:fit-content;
+    background-color: gold;
+    color: black;
+    padding: 8px;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+
+.submit-account {
+    align-self: flex-end;
+    padding: 10px 15px;
+    background-color: gold;
+    color: black;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.submit-account:hover {
+    background-color: darkgoldenrod;
+}
+
+/* page ajout de joueur */
+.submit-add-joueur {
+    align-self: flex-end;
+    padding: 10px 15px;
+    background-color: gold;
+    color: black;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.submit-add-joueur:hover {
+    background-color: darkgoldenrod;
+}
+
+.form-account select {
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.form-account select:hover {
+    cursor:pointer;
+}
+
+/* boutique */
+.main-content-shop {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 20px;
+    padding: 20px;
+    margin: auto;
+    width: 100%;
+}
+
+.shop-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 20px;
+}
+
+.shop-box {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    background-color: white;
+    border: 2px solid gold;
+    padding: 15px;
+    width: calc(25% - 20px);
+    box-shadow: 5px 5px 0px rgba(0, 0, 0, 1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.shop-box img {
+    max-width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.button-add-cart {
+    align-self: flex-end;
+    padding: 10px 15px;
+    background-color: gold;
+    color: black;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.button-add-cart:hover {
+    background-color: darkgoldenrod;
+}
+
+.cart-icon {
+    position: fixed;
+    background-color: #c4c4c4;
+    border-radius: 10px;
+    padding: 10px;
+    top: 150px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.cart-content {
+    display: none;
+    position: fixed;
+    top: 230px;
+    right: 10px;
+    background: white;
+    padding: 20px;
+    border: 2px solid black;
+    border-radius: 8px;
+    width: 250px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+}
+
+.number-item {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.button-quantity {
+    width: 25px;
+    height: 25px;
+    background-color: #cacaca;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.button-buy-all {
+    align-self: flex-end;
+    padding: 10px 15px;
+    background-color: gold;
+    color: black;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
 /* footer commun à toutes les pages*/
 footer {
     text-align: right;

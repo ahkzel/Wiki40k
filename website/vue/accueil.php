@@ -20,6 +20,7 @@
                 <div class="user-links">
                     <?php if (isset($_SESSION["emailU"])) : ?>
                         <a href="index.php?url=add-joueur">Ajouter un joueur</a>
+                        <a href="index.php?url=deconnexion">Se déconnecter</a>
                     <?php else : ?>
                         <a href="index.php?url=create-account">Créer un compte</a>
                         <a href="index.php?url=connexion">Se connecter</a>
@@ -57,7 +58,7 @@
 
                 <h2 class="rubrique-title">Personnages</h2>
                 <?php foreach ($personnages as $personnage): ?>
-                    <a href="index.php?url=faction-detail&personnage_name=<?=$personnage["nom"];?>" class="link-detail">
+                    <a href="index.php?url=personnage-detail&personnage_name=<?=$personnage["nom"];?>" class="link-detail">
                         <div class="accueil-box">
                             <h2><?= htmlspecialchars($personnage["nom"]); ?></h2>
                             <ul>
@@ -77,7 +78,7 @@
 
                 <h2 class="rubrique-title">Planètes</h2>
                 <?php foreach ($planetes as $planete): ?>
-                    <a href="index.php?url=faction-detail&planete_name=<?=$planete["nom"];?>" class="link-detail">
+                    <a href="index.php?url=planete-detail&planete_name=<?=$planete["nom"];?>" class="link-detail">
                         <div class="accueil-box">
                             <h2><?= htmlspecialchars($planete["nom"]); ?></h2>
                             <ul>

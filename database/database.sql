@@ -36,6 +36,7 @@ create table minifigs_sets (
     prix decimal(5,2),
     stock int(11),
     idF int(11),
+    image varchar(255),
     foreign key idF references faction(idF) on delete cascade,
 );
 
@@ -55,11 +56,13 @@ create table utilisateur (
 create table joueur (
     emailU varchar(150),
     idF int(11),
+    pseudo varchar(255),
     pts int(11),
     primary key (emailU, idF),
 );
 
 create table achat (
+    idA int(11) primary key auto_increment,
     emailU varchar(150),
     idM int(11),
     primary key (emailU, idF),

@@ -20,6 +20,7 @@
                 <div class="user-links">
                     <?php if (isset($_SESSION["emailU"])) : ?>
                         <a href="index.php?url=add-joueur">Ajouter un joueur</a>
+                        <a href="index.php?url=deconnexion">Se déconnecter</a>
                     <?php else : ?>
                         <a href="index.php?url=create-account">Créer un compte</a>
                         <a href="index.php?url=connexion">Se connecter</a>
