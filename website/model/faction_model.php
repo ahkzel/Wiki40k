@@ -57,7 +57,7 @@ class Faction_model {
         // cette fonction renvoie une faction singulière dont le nom est donné
         try {
             $req = $this->pdo->prepare("select * from faction where nom = :name;");
-            $req->bindValue(':name', $name, PDO::PARAM_STR);
+            $req->bindValue(":name", $name, PDO::PARAM_STR);
             $req->execute();
 
             $result = $req->fetch(PDO::FETCH_ASSOC);

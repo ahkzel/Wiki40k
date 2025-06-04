@@ -37,7 +37,7 @@ class Planete_model {
         try {
             // la faction est renseignée dans la table planete via son id uniquement, une jointure est
             // donc nécessaire
-            $req = $this->pdo->prepare("select * from planete inner join faction on faction.idF = planete.idF where faction.nom = :name;");
+            $req = $this->pdo->prepare("select planete.* from planete inner join faction on faction.idF = planete.idF where faction.nom = :name;");
             $req->bindValue(':name', $faction_name, PDO::PARAM_STR);
             $req->execute();
 

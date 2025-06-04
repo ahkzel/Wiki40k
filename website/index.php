@@ -8,7 +8,12 @@ include_once "controller/personnage_controller.php";
 include_once "controller/planete_controller.php";
 include_once "controller/utilisateur_controller.php";
 
-$url = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+// on récupère le path des url de la vue en ne gardant que ce qu'il y a après la partie "index.php?url="
+$request = str_replace('/index.php', '', $_SERVER['REQUEST_URI']); 
+$queryString = parse_url($request, PHP_URL_QUERY) ?? '';
+parse_str($queryString, $queryParams);
+$url = trim($queryParams["url"] ?? "", '/');
+
 $datas = $_GET ?? NULL;
 $forms = $_POST ?? NULL;
 
@@ -23,7 +28,10 @@ $achatC = new Achat_controller($PDOC);
 
 switch (TRUE) {
     case ($url === "") :
-        $factionC->show_first_factions();
+        $first_factions = $factionC->show_first_factions();
+        $personnages = $characterC->show_personnages_accueil();
+        $planetes = $planeteC->show_planetes_accueil();
+        include __DIR__."/vue/accueil.php";
         break;
     case ($url === "factions") :
         $factionC->show_all_factions();

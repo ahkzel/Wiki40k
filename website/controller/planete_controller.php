@@ -13,25 +13,55 @@ class Planete_controller {
         $this->faction_controller = $faction_controller;
     }
 
+    public function show_planetes_accueil() {
+        $planetes = $this->get_all_planetes();
+
+        foreach ($planetes as &$TEMP_planete) {
+            if (isset($TEMP_planete["idF"])) {
+                $TEMP_idF = $TEMP_planete["idF"];
+                $TEMP_faction_parent_planete_name = $this->get_faction_name($TEMP_idF);
+                $TEMP_planete["appartenance_name"] = $TEMP_faction_parent_planete_name;
+            }
+            foreach ($TEMP_planete as &$TEMP_attribute) {
+                $TEMP_attribute = $this->handle_NULL($TEMP_attribute);
+            }
+        }
+        $datas = $planetes ?? [];
+        return $datas;
+    }
+
     public function show_planetes($datas) {
-        if ($datas["parent_faction"]) {
-            $TEMP_faction_name = htmlspecialchars($datas["parent_faction"]);
+        if (isset($datas["parent_faction"])) {
+            $TEMP_faction_name = $datas["parent_faction"];
             $planetes = $this->get_planetes_from_faction($TEMP_faction_name);
         }
         else {
             $planetes = $this->get_all_planetes();
         }
+        foreach ($planetes as &$TEMP_planete) {
+            if (isset($TEMP_planete["idF"])) {
+                $TEMP_idF = $TEMP_planete["idF"];
+                $faction_parent_planete_name = $this->get_faction_name($TEMP_idF);
+            }
+            foreach ($TEMP_planete as &$TEMP_attribute) {
+                $TEMP_attribute = $this->handle_NULL($TEMP_attribute);
+            }
+        }
+
         include __DIR__."/../vue/planetes.php"; //vue
     }
 
     public function show_planete_detail($datas) {
         if (isset($datas["planete_name"])) {
-            $TEMP_planete_name = htmlspecialchars($datas["planete_name"]);
+            $TEMP_planete_name = $datas["planete_name"];
             $active_planete = $this->this_planete($TEMP_planete_name);
 
             if (isset($active_planete["idF"])) {
                 $TEMP_idF = $active_planete["idF"];
                 $faction_parent_planete_name = $this->get_faction_name($TEMP_idF);
+            }
+            foreach ($active_planete as &$TEMP_attribute) {
+                $TEMP_attribute = $this->handle_NULL($TEMP_attribute);
             }
         }
 
@@ -57,6 +87,13 @@ class Planete_controller {
         $faction = $this->faction_controller->get_faction_from_id($idF);
         $faction_name = $faction["nom"];
         return $faction_name;
+    }
+
+    public function handle_NULL($item) {
+        if ($item == NULL) {
+            return "N/A";
+        }
+        return $item;
     }
 }
 ?>

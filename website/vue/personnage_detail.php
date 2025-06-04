@@ -6,14 +6,16 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
         <link rel="stylesheet" href="css/style.css">
-        <title>wiki40K - Accueil</title>
+        <title>wiki40K - Personnage Detail</title>
     </head>
 
     <body>
 
         <header>
             <div class="header-container">
-                <h1>Accueil</h1>
+                <a href="index.php" class="retour-home">⬅ Accueil</a>
+
+                <h1><?=htmlspecialchars($active_character["nom"]); ?></h1>
                 
                 <div class="user-links">
                     <?php if (isset($_SESSION["emailU"])) : ?>
@@ -31,10 +33,29 @@
                 <li><a href="index.php?url=factions">Factions</a></li>
                 <li><a href="index.php?url=personnages">Personnages</a></li>
                 <li><a href="index.php?url=planetes">Planètes</a></li>
-                <li><a href="index.php?url=shop">Shop</a></li>
+                <li><a href="index.php?url=shop">Boutique</a></li>
             </ul>
         </nav>
 
+        <main>
+            <div class="main-content-accueil">
+                <?php if (isset($active_character)) :?>
+                    <div class="detail-box">
+                        <h2><?= htmlspecialchars($active_character["nom"]); ?></h2>
+                        <ul>
+                            <li><b>Appartenance : </b><?= htmlspecialchars($faction_parent_personnage_name); ?></li>
+                            <li><b>Sous-faction : </b><?= htmlspecialchars($active_character["sousFaction"]); ?></li>
+                            <li><b>Age : </b><?= htmlspecialchars($active_character["age"]); ?></li>
+                            <li><b>Taille : </b><?= htmlspecialchars($active_character["taille"]); ?></li>
+                            <li><b>Genre : </b><?= htmlspecialchars($active_character["genre"]); ?></li>
+                            <li><b>Statut : </b><?= htmlspecialchars($active_character["statut"]); ?></li>
+                            <li><b>Classe : </b><?= htmlspecialchars($active_character["classe"]); ?></li>
+                            <li><b>Bio : </b><?= htmlspecialchars($active_character["bio"]); ?></li>
+                        </ul>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </main>
 
         <footer>
             <p>&copy; 2025 - Wiki40k, Axel Beaulieu-Luangkham. Tous droits réservés.</p>

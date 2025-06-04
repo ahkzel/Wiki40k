@@ -33,10 +33,22 @@ header {
     align-items: center;
 }
 
+.retour-home {
+    text-decoration: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.retour-home:hover {
+    text-decoration: underline;
+}
+
 header h1 {
     flex: 1;
     text-align: center;
-    position: relative;
+    position: absolute;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -100,17 +112,7 @@ header h1 {
     cursor: pointer;
 }
 
-/* main contenu */
-/* main {
-    max-width: 1000px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: white;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-} */
-
-/* page d'accueil */
+/* page d'accueil, factions, personnages et planètes */
 .main-content-accueil {
     display: flex;
     position: relative;
@@ -123,7 +125,15 @@ header h1 {
     width: 100%;
 }
 
-.link-faction-detail {
+.rubrique-title {
+    width: calc(100% - 40px);
+    display: flex;
+    position: relative;
+    left: 40px;
+    padding: 20px;
+}
+
+.link-detail {
     display: flex;
     position: relative;
     text-decoration: none;
@@ -132,7 +142,7 @@ header h1 {
     width: calc(25% - 20px);
 }
 
-.faction-box {
+.accueil-box {
     display: flex;
     position: relative;
     flex-direction: column;
@@ -146,12 +156,12 @@ header h1 {
     transition: all 0.3s ease-in;
 }
 
-.link-faction-detail:hover .faction-box {
+.link-detail:hover .accueil-box {
     background-color: #dfdddd;
     cursor: pointer;
 }
 
-.faction-box h2 {
+.accueil-box h2 {
     position: absolute;
     top: 0;
     left: 0;
@@ -165,7 +175,7 @@ header h1 {
     color: white;
 }
 
-.faction-box ul {
+.accueil-box ul {
     position: relative;
     top: 40px;
     text-align: left;
@@ -173,9 +183,69 @@ header h1 {
     padding-bottom: 20px;
 }
 
-.faction-box li {
+.accueil-box li {
     padding: 10px;
     margin: 5px 0;
+}
+
+.separator {
+    width: 90%;
+    height: 3px;
+    background-color: #535353;
+    margin: 20px auto;
+}
+
+/* pages détail */
+.detail-box {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    background-color: white;
+    border: 2px solid gold;
+    padding: 20px;
+    box-shadow: 5px 5px 0px rgba(0, 0, 0, 1);
+    width: 90%;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.detail-box h2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 25px;
+    border-bottom: 2px solid gold;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    width: 100%;
+    text-align: center;
+    background-color: #2c3e50;
+    color: white;
+}
+
+.detail-box ul {
+    position: relative;
+    top: 40px;
+    text-align: left;
+    list-style: none;
+    padding-bottom: 20px;
+}
+
+.detail-box li {
+    font-size: 19px;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+.detail-box a {
+    text-decoration: none;
+    color: #101418;
+}
+
+.detail-box a:hover {
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 /* footer commun à toutes les pages*/

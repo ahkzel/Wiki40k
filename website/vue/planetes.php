@@ -6,14 +6,16 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
         <link rel="stylesheet" href="css/style.css">
-        <title>wiki40K - Accueil</title>
+        <title>wiki40K - Planetes</title>
     </head>
 
     <body>
 
         <header>
             <div class="header-container">
-                <h1>Accueil</h1>
+                <a href="index.php" class="retour-home">⬅ Accueil</a>
+
+                <h1>Planètes</h1>
                 
                 <div class="user-links">
                     <?php if (isset($_SESSION["emailU"])) : ?>
@@ -31,10 +33,26 @@
                 <li><a href="index.php?url=factions">Factions</a></li>
                 <li><a href="index.php?url=personnages">Personnages</a></li>
                 <li><a href="index.php?url=planetes">Planètes</a></li>
-                <li><a href="index.php?url=shop">Shop</a></li>
+                <li><a href="index.php?url=shop">Boutique</a></li>
             </ul>
         </nav>
 
+        <main>
+            <div class="main-content-accueil">
+                <?php foreach ($planetes as $planete): ?>
+                    <a href="index.php?url=planete-detail&planete_name=<?=$planete["nom"];?>" class="link-detail">
+                        <div class="accueil-box">
+                            <h2><?= htmlspecialchars($planete["nom"]); ?></h2>
+                            <ul>
+                                <li><b>Appartenance : </b><?= htmlspecialchars($faction_parent_planete_name); ?></li>
+                                <li><b>Statut : </b><?= htmlspecialchars($planete["statut"]); ?></li>
+                                <li><b>Bio : </b><?= htmlspecialchars($planete["bio"]); ?></li>
+                            </ul>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        </main>
 
         <footer>
             <p>&copy; 2025 - Wiki40k, Axel Beaulieu-Luangkham. Tous droits réservés.</p>

@@ -36,7 +36,7 @@ class Personnage_model {
 
         try {
             // la faction est renseignée dans la table personnage par son id donc une jointure est nécessaire
-            $req = $this->pdo->prepare("select * from personnage inner join faction on faction.idF = personnage.idF where faction.nom = :name;");
+            $req = $this->pdo->prepare("select personnage.* from personnage inner join faction on faction.idF = personnage.idF where faction.nom = :name;");
             $req->bindValue(':name', $faction_name, PDO::PARAM_STR);
             $req->execute();
 

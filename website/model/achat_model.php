@@ -13,7 +13,7 @@ class Achat_model {
         $results = array();
 
         try {
-            $req = $this->pdo->prepare("select * from achat inner join minifigs_sets on minifigs_sets.idM = achat.idM where minifigs_sets.nom = :name and achat.emailU = :emailU;");
+            $req = $this->pdo->prepare("select achat.* from achat inner join minifigs_sets on minifigs_sets.idM = achat.idM where minifigs_sets.nom = :name and achat.emailU = :emailU;");
             $req->bindValue(':name', $name, PDO::PARAM_STR);
             $req->bindValue(':emailU', $emailU, PDO::PARAM_STR);
             $req->execute();

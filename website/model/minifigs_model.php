@@ -82,7 +82,7 @@ class Minifigs_model {
         try {
             // la table faction est référencée dans la table minifigs_sets via son id, une jointure est
             // donc nécessaire
-            $req = $this->pdo->prepare("select * from minifigs_sets inner join faction on faction.idF = minifigs_sets.idF where faction.nom = :name and minifigs_sets.stock >= 0;");
+            $req = $this->pdo->prepare("select minifigs_sets.* from minifigs_sets inner join faction on faction.idF = minifigs_sets.idF where faction.nom = :name and minifigs_sets.stock >= 0;");
             $req->bindValue(':name', $faction_name, PDO::PARAM_STR);
             $req->execute();
 

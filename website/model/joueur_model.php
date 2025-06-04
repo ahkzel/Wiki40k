@@ -34,7 +34,7 @@ class Joueur_model {
     public function get_player_by_emailU_faction($emailU, $name_faction) {
         // cette fonction renvoie le joueur singulier dont l'emailU et la faction est donné
         try {
-            $req = $this->pdo->prepare("select * from joueur inner join faction on faction.idF = joueur.idF where emailU = :emailU and faction.nom = :name;");
+            $req = $this->pdo->prepare("select joueur.* from joueur inner join faction on faction.idF = joueur.idF where emailU = :emailU and faction.nom = :name;");
             $req->bindValue(':emailU', $emailU, PDO::PARAM_STR);
             $req->bindValue(':name', $name_faction, PDO::PARAM_INT);
             $req->execute();

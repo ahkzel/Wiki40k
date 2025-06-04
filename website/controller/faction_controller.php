@@ -14,6 +14,11 @@ class Faction_controller {
     public function show_all_factions() {
         $all_factions = $this->get_all_factions();
 
+        foreach ($all_factions as &$TEMP_faction) {
+            foreach ($TEMP_faction as &$TEMP_attribute) {
+                $TEMP_attribute = $this->handle_NULL($TEMP_attribute);
+            }
+        }
         include __DIR__."/../vue/factions.php"; //vue
     }
 
@@ -27,15 +32,20 @@ class Faction_controller {
                 $TEMP_attribute = $this->handle_NULL($TEMP_attribute);
             }
         }
-
-        include __DIR__."/../vue/accueil.php"; //vue
+        $datas = $first_factions ?? [];
+        return $datas;
     }
 
     public function show_faction_detail($datas) {
         if (isset($datas["faction_name"])) {
-            $TEMP_faction_name = htmlspecialchars($datas["faction_name"]);
+            $TEMP_faction_name = $datas["faction_name"];
             $active_faction = $this->this_faction($TEMP_faction_name);
+
+            foreach ($active_faction as &$TEMP_attribute) {
+                $TEMP_attribute = $this->handle_NULL($TEMP_attribute);
+            }
         }
+
         include __DIR__."/../vue/faction_detail.php"; //vue
     }
 

@@ -13,6 +13,8 @@
 
         <header>
             <div class="header-container">
+                <a href="index.php" class="retour-home">⬅ Accueil</a>
+
                 <h1>Accueil</h1>
                 
                 <div class="user-links">
@@ -31,21 +33,56 @@
                 <li><a href="index.php?url=factions">Factions</a></li>
                 <li><a href="index.php?url=personnages">Personnages</a></li>
                 <li><a href="index.php?url=planetes">Planètes</a></li>
-                <li><a href="index.php?url=shop">Shop</a></li>
+                <li><a href="index.php?url=shop">Boutique</a></li>
             </ul>
         </nav>
 
         <main>
             <div class="main-content-accueil">
+                <h2 class="rubrique-title">Factions</h2>
                 <?php foreach ($first_factions as $faction): ?>
-                    <a href="index.php?url=faction-detail&faction-name= <?= $faction["nom"]; ?>" class="link-faction-detail">
-                        <div class="faction-box">
+                    <a href="index.php?url=faction-detail&faction_name=<?=$faction["nom"];?>" class="link-detail">
+                        <div class="accueil-box">
                             <h2><?= htmlspecialchars($faction["nom"]); ?></h2>
                             <ul>
                                 <li><b>Appartenance : </b><?= htmlspecialchars($faction["appartenance"]); ?></li>
                                 <li><b>Influence : </b><?= htmlspecialchars($faction["influence"]); ?></li>
                                 <li><b>age : </b><?= htmlspecialchars($faction["age"]); ?></li>
-                                <li><b>bio : </b><?= htmlspecialchars($faction["bio"]); ?></li>
+                            </ul>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
+
+                <div class="separator"></div>
+
+                <h2 class="rubrique-title">Personnages</h2>
+                <?php foreach ($personnages as $personnage): ?>
+                    <a href="index.php?url=faction-detail&personnage_name=<?=$personnage["nom"];?>" class="link-detail">
+                        <div class="accueil-box">
+                            <h2><?= htmlspecialchars($personnage["nom"]); ?></h2>
+                            <ul>
+                                <li><b>Appartenance : </b><?= htmlspecialchars($personnage["appartenance_name"]); ?></li>
+                                <li><b>Sous-faction : </b><?= htmlspecialchars($personnage["sousFaction"]); ?></li>
+                                <li><b>Age : </b><?= htmlspecialchars($personnage["age"]); ?></li>
+                                <li><b>Taille : </b><?= htmlspecialchars($personnage["taille"]); ?></li>
+                                <li><b>Genre : </b><?= htmlspecialchars($personnage["genre"]); ?></li>
+                                <li><b>Statut : </b><?= htmlspecialchars($personnage["statut"]); ?></li>
+                                <li><b>Classe : </b><?= htmlspecialchars($personnage["classe"]); ?></li>
+                            </ul>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
+
+                <div class="separator"></div>
+
+                <h2 class="rubrique-title">Planètes</h2>
+                <?php foreach ($planetes as $planete): ?>
+                    <a href="index.php?url=faction-detail&planete_name=<?=$planete["nom"];?>" class="link-detail">
+                        <div class="accueil-box">
+                            <h2><?= htmlspecialchars($planete["nom"]); ?></h2>
+                            <ul>
+                                <li><b>Appartenance : </b><?= htmlspecialchars($planete["appartenance_name"]); ?></li>
+                                <li><b>Statut : </b><?= htmlspecialchars($planete["statut"]); ?></li>
                             </ul>
                         </div>
                     </a>

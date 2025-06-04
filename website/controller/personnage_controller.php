@@ -13,25 +13,55 @@ class Personnage_controller {
         $this->faction_controller = $faction_controller;
     }
 
+    public function show_personnages_accueil() {
+        $personnages = $this->get_all_personnages();
+
+        foreach ($personnages as &$TEMP_personnage) {
+            if (isset($TEMP_personnage["idF"])) {
+                $TEMP_idF = $TEMP_personnage["idF"];
+                $TEMP_faction_parent_personnage_name = $this->get_faction_name($TEMP_idF);
+                $TEMP_personnage["appartenance_name"] = $TEMP_faction_parent_personnage_name;
+            }
+            foreach ($TEMP_personnage as &$TEMP_attribute) {
+                $TEMP_attribute = $this->handle_NULL($TEMP_attribute);
+            }
+        }
+        $datas = $personnages ?? [];
+        return $datas;
+    }
+
     public function show_personnages($datas) {
-        if ($datas["parent_faction"]) {
-            $TEMP_faction_name = htmlspecialchars($datas["parent_faction"]);
+        if (isset($datas["parent_faction"])) {
+            $TEMP_faction_name = $datas["parent_faction"];
             $personnages = $this->get_personnages_from_faction($TEMP_faction_name);
         }
         else {
             $personnages = $this->get_all_personnages();
         }
+        foreach ($personnages as &$TEMP_personnage) {
+            if (isset($TEMP_personnage["idF"])) {
+                $TEMP_idF = $TEMP_personnage["idF"];
+                $faction_parent_personnage_name = $this->get_faction_name($TEMP_idF);
+            }
+            foreach ($TEMP_personnage as &$TEMP_attribute) {
+                $TEMP_attribute = $this->handle_NULL($TEMP_attribute);
+            }
+        }
+
         include __DIR__."/../vue/personnages.php"; //vue
     }
 
     public function show_personnage_detail($datas) {
         if (isset($datas["personnage_name"])) {
-            $TEMP_personnage_name = htmlspecialchars($datas["personnage_name"]);
+            $TEMP_personnage_name = $datas["personnage_name"];
             $active_character = $this->this_personnage($TEMP_personnage_name);
 
             if (isset($active_character["idF"])) {
                 $TEMP_idF = $active_character["idF"];
                 $faction_parent_personnage_name = $this->get_faction_name($TEMP_idF);
+            }
+            foreach ($active_character as &$TEMP_attribute) {
+                $TEMP_attribute = $this->handle_NULL($TEMP_attribute);
             }
         }
         
@@ -67,6 +97,13 @@ class Personnage_controller {
         $faction = $this->faction_controller->get_faction_from_id($idF);
         $faction_name = $faction["nom"];
         return $faction_name;
+    }
+
+    public function handle_NULL($item) {
+        if ($item == NULL) {
+            return "N/A";
+        }
+        return $item;
     }
 }
 ?>
